@@ -1,5 +1,5 @@
 ## Overview
-Repository with preconfigured maven project with junit5 configuration on a board.
+Project for saving file on the server. These files should have access by a link also.
 
 ## Building
 ...
