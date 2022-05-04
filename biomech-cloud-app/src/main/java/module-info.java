@@ -10,6 +10,6 @@ module com.github.kastkest.cloud.biomechcloudapp {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
 
-    opens com.github.kastkest.cloud.biomechcloudapp to javafx.fxml;
-    exports com.github.kastkest.cloud.biomechcloudapp;
+    opens com.github.kastkest.cloud.biomech_app to javafx.fxml;
+    exports com.github.kastkest.cloud.biomech_app;
 }
