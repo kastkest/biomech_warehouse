@@ -29,5 +29,15 @@ public class Net {
     public String readUTF() throws IOException {
         return is.readUTF();
     }
+
+    public DataOutputStream getOutputStream() {
+        return os;
+    }
+
+    public DataInputStream getInputStream() {
+        return is;
+    }
+
+
 }
 
