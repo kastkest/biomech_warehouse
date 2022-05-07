@@ -5,7 +5,6 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 //msg - String
@@ -20,6 +19,6 @@ public class SecondInHandler extends ChannelInboundHandlerAdapter {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String date = sdf.format(new Date());
         message=date + " " + message;
-        ctx.write(message);
+        ctx.writeAndFlush(message);
     }
 }
