@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="558.0" prefWidth="710.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.kastkest.cloud.MainController">
+
+      <ListView fx:id="clientView" layoutX="28.0" layoutY="31.0" prefHeight="496.0" prefWidth="274.0" />
+      <ListView fx:id="serverView" layoutX="403.0" layoutY="31.0" prefHeight="496.0" prefWidth="274.0" />
+      <Button onAction="#upload" layoutX="318.0" layoutY="184.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="75.0" text="upload" />
+      <Button onAction="#download" layoutX="318.0" layoutY="293.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="75.0" text="download" />
+
+</AnchorPane>

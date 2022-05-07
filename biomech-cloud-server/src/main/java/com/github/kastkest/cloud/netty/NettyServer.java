@@ -1,5 +1,6 @@
 package com.github.kastkest.cloud.netty;
 
+import com.github.kastkest.cloud.netty.serialization.SerializationPipeLine;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.EventLoopGroup;
@@ -8,7 +9,7 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class EchoServer {
+public class NettyServer {
 
     public static void main(String[] args) {
 
@@ -19,13 +20,14 @@ public class EchoServer {
         try {
             bootstrap.group(light, hard)
                     .channel(NioServerSocketChannel.class)
-                    .childHandler(new EchoPipeline());
+                    .childHandler(new SerializationPipeLine());
 
-            ChannelFuture channelFuture = bootstrap.bind(8189).sync();
+            ChannelFuture channelFuture = bootstrap.bind(8189)
+                    .sync();
+            log.info("Server started...");
             channelFuture.channel()
                     .closeFuture()
                     .sync();
-            log.info("Server started...");
         } catch (InterruptedException e) {
             log.error("", e);
         } finally {

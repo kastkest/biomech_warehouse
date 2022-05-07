@@ -47,7 +47,7 @@ public class FileMessageHandler implements Runnable {
         // file
         File file = dir.toPath().resolve(fileName).toFile();
 
-        // read file lenght
+        // read file length
         long size = is.readLong();
 
         //allocate buffer
