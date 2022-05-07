@@ -16,7 +16,7 @@ public class FirstInHandler extends ChannelInboundHandlerAdapter {
         StringBuilder builder = new StringBuilder();
         log.info("received: {}", message);
         while (message.isReadable()) {
-            builder.append(message.readChar());
+            builder.append((char) message.readByte());
         }
         ctx.fireChannelRead(builder.toString());
     }
