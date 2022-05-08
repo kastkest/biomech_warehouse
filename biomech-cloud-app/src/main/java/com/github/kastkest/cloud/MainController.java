@@ -23,6 +23,7 @@ public class MainController implements Initializable {
     public ListView<String> serverView;
     private Net net;
     private Path clientDir;
+    private Path serverDir = Path.of("servet_files");
 
 
 //    private void readListFiles() {
@@ -83,7 +84,9 @@ public class MainController implements Initializable {
         net.write(new FileMessage(clientDir.resolve(fileName)));
     }
 
-    public void download(ActionEvent actionEvent) {
+    public void download(ActionEvent actionEvent) throws Exception {
+        String fileName = serverView.getSelectionModel().getSelectedItem();
+        net.write(new FileMessage(serverDir.resolve(fileName)));
 
     }
 }
