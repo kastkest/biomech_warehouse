@@ -22,6 +22,7 @@ public class ListMessage extends AbstractMassage{
 
     @Override
     public MessageType getMessageType() {
+
         return MessageType.LIST;
     }
 }

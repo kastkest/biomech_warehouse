@@ -2,6 +2,7 @@ package com.github.kastkest.cloud;
 
 
 import com.github.kastkest.cloud.model.AbstractMassage;
+import com.github.kastkest.cloud.model.DownloadMessage;
 import com.github.kastkest.cloud.model.FileMessage;
 import com.github.kastkest.cloud.model.ListMessage;
 import com.github.kastkest.cloud.network.Net;
@@ -24,6 +25,7 @@ public class MainController implements Initializable {
     private Net net;
     private Path clientDir;
     private Path serverDir = Path.of("servet_files");
+    private byte[] bytes;
 
 
 //    private void readListFiles() {
@@ -46,8 +48,12 @@ public class MainController implements Initializable {
                 if (message instanceof ListMessage lm) {
                     serverView.getItems().clear();
                     serverView.getItems().addAll(lm.getFiles());
-
                 }
+                if (message instanceof DownloadMessage) {
+                    String selectedItem = serverView.getSelectionModel().getSelectedItem();
+                    bytes = selectedItem.getBytes();
+                }
+
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -85,8 +91,6 @@ public class MainController implements Initializable {
     }
 
     public void download(ActionEvent actionEvent) throws Exception {
-        String fileName = serverView.getSelectionModel().getSelectedItem();
-        net.write(new FileMessage(serverDir.resolve(fileName)));
-
+        Files.write(clientDir,bytes);
     }
 }
