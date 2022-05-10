@@ -22,7 +22,7 @@ public class NettyServer {
                     .channel(NioServerSocketChannel.class)
                     .childHandler(new SerializationPipeLine());
 
-            ChannelFuture channelFuture = bootstrap.bind(8189)
+            ChannelFuture channelFuture = bootstrap.bind(8190)
                     .sync();
             log.info("Server started...");
             channelFuture.channel()

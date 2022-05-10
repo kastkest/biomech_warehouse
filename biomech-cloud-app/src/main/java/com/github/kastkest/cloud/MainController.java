@@ -24,22 +24,7 @@ public class MainController implements Initializable {
     public ListView<String> serverView;
     private Net net;
     private Path clientDir;
-    private Path serverDir = Path.of("servet_files");
-    private byte[] bytes;
 
-
-//    private void readListFiles() {
-//        try {
-//            view.getItems().clear();
-//            Long filesCont = net.readLong();
-//            for (int i = 0; i < filesCont; i++) {
-//                String fileName = net.readUTF();
-//                view.getItems().addAll(fileName);
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
 
     private void read() {
         try {
@@ -50,8 +35,8 @@ public class MainController implements Initializable {
                     serverView.getItems().addAll(lm.getFiles());
                 }
                 if (message instanceof DownloadMessage) {
-                    String selectedItem = serverView.getSelectionModel().getSelectedItem();
-                    bytes = selectedItem.getBytes();
+                    clientView.getItems().clear();
+                    clientView.getItems().addAll(getClientFiles());
                 }
 
             }
@@ -74,7 +59,7 @@ public class MainController implements Initializable {
             clientDir = Path.of("files");
             clientView.getItems().clear();
             clientView.getItems().addAll(getClientFiles());
-            net = new Net("localhost", 8189);
+            net = new Net("localhost", 8190);
             Thread.sleep(300);
             Thread readThread = new Thread(this::read);
             readThread.setDaemon(true);
@@ -91,6 +76,6 @@ public class MainController implements Initializable {
     }
 
     public void download(ActionEvent actionEvent) throws Exception {
-        Files.write(clientDir,bytes);
+        net.write(new DownloadMessage(serverView.getSelectionModel().getSelectedItem()));
     }
 }

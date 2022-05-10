@@ -11,11 +11,9 @@ import java.nio.file.Path;
 public class DownloadMessage extends AbstractMassage {
 
     private final String name;
-    private final byte[] bytes;
 
-    public DownloadMessage(Path path) throws IOException {
-        name = path.getFileName().toString();
-        bytes = Files.readAllBytes(path);
+    public DownloadMessage(String name) throws IOException {
+        this.name = name;
     }
 
     @Override
