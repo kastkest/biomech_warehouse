@@ -78,4 +78,16 @@ public class MainController implements Initializable {
     public void download(ActionEvent actionEvent) throws Exception {
         net.write(new DownloadMessage(serverView.getSelectionModel().getSelectedItem()));
     }
+
+    public void refresh(ActionEvent actionEvent) {
+
+    }
+
+    public void removeFromServer(ActionEvent actionEvent) {
+
+    }
+
+    public void createFolder(ActionEvent actionEvent) {
+
+    }
 }
