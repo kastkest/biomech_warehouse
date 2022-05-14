@@ -17,7 +17,7 @@
                 <TextField editable="false" HBox.hgrow="ALWAYS" />
                 <Button text="Вверх" />
             </HBox>
-            <ListView fx:id="clientView" layoutX="28.0" layoutY="31.0" prefHeight="496.0" prefWidth="274.0" />
+            <TableView fx:id="clientView" layoutX="28.0" layoutY="31.0" prefHeight="496.0" prefWidth="274.0" />
             <padding>
                 <Insets left="10" top="5" />
             </padding>
@@ -31,7 +31,7 @@
             </padding>
         </VBox>
         <VBox>
-            <ListView fx:id="serverView" layoutX="403.0" layoutY="31.0" prefHeight="496.0" prefWidth="274.0" />
+            <TableView fx:id="serverView" layoutX="403.0" layoutY="31.0" prefHeight="496.0" prefWidth="274.0" />
             <HBox spacing="5">
                 <Button maxWidth="Infinity" onAction="#removeFromServer" HBox.hgrow="ALWAYS" text="Remove" />
                 <Button maxWidth="Infinity" onAction="#createFolder" HBox.hgrow="ALWAYS" text="Create folder" />

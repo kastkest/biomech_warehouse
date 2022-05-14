@@ -8,7 +8,7 @@ import com.github.kastkest.cloud.model.ListMessage;
 import com.github.kastkest.cloud.network.Net;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ListView;
+import javafx.scene.control.TableView;
 
 
 import java.io.IOException;
@@ -20,8 +20,8 @@ import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
 
-    public ListView<String> clientView;
-    public ListView<String> serverView;
+    public TableView<String> clientView;
+    public TableView<String> serverView;
     private Net net;
     private Path clientDir;
 
