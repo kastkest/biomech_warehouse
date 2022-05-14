@@ -30,6 +30,15 @@ public class MainController implements Initializable {
 
 
     private void read() {
+        TableColumn<FileInfo, String> fileTypeServerColumn = new TableColumn<>("Type");
+        fileTypeServerColumn.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getType().getName()));
+        fileTypeServerColumn.setPrefWidth(40);
+
+        TableColumn<FileInfo, String> fileNameServerColumn = new TableColumn<>("Name");
+        fileNameServerColumn.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getFilename()));
+        fileNameServerColumn.setPrefWidth(120);
+
+        serverView.getColumns().addAll(fileNameServerColumn, fileTypeServerColumn);
         try {
             while (true) {
                 AbstractMassage message = net.read();
@@ -68,17 +77,8 @@ public class MainController implements Initializable {
         fileNameClientColumn.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getFilename()));
         fileNameClientColumn.setPrefWidth(120);
 
-        TableColumn<FileInfo, String> fileTypeServerColumn = new TableColumn<>("Type");
-        fileTypeClientColumn.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getType().getName()));
-        fileTypeClientColumn.setPrefWidth(40);
-
-        TableColumn<FileInfo, String> fileNameServerColumn = new TableColumn<>("Name");
-        fileNameClientColumn.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getFilename()));
-        fileNameClientColumn.setPrefWidth(120);
-
 
         clientView.getColumns().addAll(fileNameClientColumn, fileTypeClientColumn);
-        serverView.getColumns().addAll(fileNameServerColumn, fileTypeServerColumn);
         try {
             clientView.getItems().clear();
             clientView.getItems().addAll(getClientFiles(clientDir));
@@ -105,7 +105,11 @@ public class MainController implements Initializable {
         net.write(new DownloadMessage(serverView.getSelectionModel().getSelectedItem().getFilename()));
     }
 
-    public void refresh(ActionEvent actionEvent) {
+    public void refresh(ActionEvent actionEvent) throws IOException {
+  //      net.write(new ListMessage(clientDir));
+        serverView.getItems().clear();
+        serverView.getItems().addAll(getClientFiles(serverDir));
+
 
     }
 
