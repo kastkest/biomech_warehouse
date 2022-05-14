@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox prefHeight="558.0" prefWidth="710.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.kastkest.cloud.MainController">
+<VBox prefHeight="558.0" prefWidth="1010.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.kastkest.cloud.MainController">
     <MenuBar>
         <Menu text="Меню">
             <MenuItem text="Выйти из программы" />
@@ -17,7 +17,7 @@
                 <TextField editable="false" HBox.hgrow="ALWAYS" />
                 <Button text="Вверх" />
             </HBox>
-            <TableView fx:id="clientView" layoutX="28.0" layoutY="31.0" prefHeight="496.0" prefWidth="274.0" />
+            <TableView fx:id="clientView" layoutX="28.0" layoutY="31.0" prefHeight="496.0" prefWidth="374.0" />
             <padding>
                 <Insets left="10" top="5" />
             </padding>
@@ -31,7 +31,7 @@
             </padding>
         </VBox>
         <VBox>
-            <TableView fx:id="serverView" layoutX="403.0" layoutY="31.0" prefHeight="496.0" prefWidth="274.0" />
+            <TableView fx:id="serverView" layoutX="403.0" layoutY="31.0" prefHeight="496.0" prefWidth="374.0" />
             <HBox spacing="5">
                 <Button maxWidth="Infinity" onAction="#removeFromServer" HBox.hgrow="ALWAYS" text="Remove" />
                 <Button maxWidth="Infinity" onAction="#createFolder" HBox.hgrow="ALWAYS" text="Create folder" />

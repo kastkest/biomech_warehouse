@@ -11,12 +11,12 @@ import java.util.List;
 @Getter
 public class ListMessage extends AbstractMassage{
 
-    private final List<String> files;
+    private final List<FileInfo> files;
 
     public ListMessage(Path path) throws IOException {
+
         files = Files.list(path)
-                .map(Path::getFileName)
-                .map(Path::toString)
+                .map(FileInfo::new)
                 .toList();
     }
 
