@@ -8,7 +8,7 @@ import lombok.Getter;
 @Getter
 public enum FileType {
     FILE("file"),
-    DIRECTORY("folder");
+    DIRECTORY("dir");
 
     private String name;
 }

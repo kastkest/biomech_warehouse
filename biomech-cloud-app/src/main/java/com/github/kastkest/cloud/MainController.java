@@ -3,13 +3,12 @@ package com.github.kastkest.cloud;
 
 import com.github.kastkest.cloud.model.*;
 import com.github.kastkest.cloud.network.Net;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
+import javafx.util.Callback;
 
 
 import java.io.IOException;
@@ -25,7 +24,7 @@ public class MainController implements Initializable {
     public TableView<FileInfo> clientView;
     public TableView<FileInfo> serverView;
     private Net net;
-    private Path clientDir = Paths.get("files");
+    private Path clientDir = Paths.get(".");
     private Path serverDir = Paths.get("server_files");
 
 
@@ -71,14 +70,39 @@ public class MainController implements Initializable {
 
         TableColumn<FileInfo, String> fileTypeClientColumn = new TableColumn<>("Type");
         fileTypeClientColumn.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getType().getName()));
-        fileTypeClientColumn.setPrefWidth(40);
+        fileTypeClientColumn.setPrefWidth(50);
 
         TableColumn<FileInfo, String> fileNameClientColumn = new TableColumn<>("Name");
         fileNameClientColumn.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getFilename()));
         fileNameClientColumn.setPrefWidth(120);
 
+        TableColumn<FileInfo, Long> fileSizeClientColumn = new TableColumn<>("Size");
+        fileSizeClientColumn.setCellValueFactory(param -> new SimpleObjectProperty<>(param.getValue().getSize()));
+        fileSizeClientColumn.setPrefWidth(120);
+        fileSizeClientColumn.setCellFactory(column -> {
+            return new TableCell<FileInfo, Long>() {
+                @Override
+                protected void updateItem(Long item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (item == null || empty) {
+                        setText(null);
+                        setStyle("");
+                    } else {
+                        String text = String.format("%,d bytes", item);
+                        if (item == -1) {
+                            text = "";
+                        }
+                        setText(text);
+                    }
+                }
+            };
+        });
 
-        clientView.getColumns().addAll(fileNameClientColumn, fileTypeClientColumn);
+        clientView.getColumns().addAll(fileNameClientColumn, fileTypeClientColumn, fileSizeClientColumn);
+        clientView.getSortOrder().add(fileTypeClientColumn);
+
+
+
         try {
             clientView.getItems().clear();
             clientView.getItems().addAll(getClientFiles(clientDir));

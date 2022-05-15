@@ -26,9 +26,6 @@ public class FileHandler extends SimpleChannelInboundHandler<AbstractMassage> {
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, AbstractMassage msg) throws Exception {
         log.info("received: {} message", msg.getMessageType().getName());
-        if (msg instanceof ListMessage lm) {
-            ctx.writeAndFlush((new ListMessage(serverDir)).getFiles());
-        }
 
         if (msg instanceof FileMessage file) {
             Files.write(serverDir.resolve(file.getName()), file.getBytes());
