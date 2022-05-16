@@ -9,7 +9,7 @@ import java.util.List;
 
 
 @Getter
-public class ListMessage extends AbstractMassage{
+public class ListMessage extends AbstractMassage {
 
     private final List<FileInfo> files;
 
@@ -18,6 +18,7 @@ public class ListMessage extends AbstractMassage{
         files = Files.list(path)
                 .map(FileInfo::new)
                 .toList();
+
     }
 
     @Override

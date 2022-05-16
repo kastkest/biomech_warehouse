@@ -13,9 +13,9 @@
     <HBox>
         <VBox>
             <HBox>
-                <ComboBox />
-                <TextField editable="false" HBox.hgrow="ALWAYS" />
-                <Button text="Вверх" />
+                <ComboBox fx:id="disksBox" onAction="#selectDisk"/>
+                <TextField fx:id="pathField" editable="false" HBox.hgrow="ALWAYS" />
+                <Button onAction="#passUp" text="Up" />
             </HBox>
             <TableView fx:id="clientView" layoutX="28.0" layoutY="31.0" prefHeight="496.0" prefWidth="374.0" />
             <padding>
