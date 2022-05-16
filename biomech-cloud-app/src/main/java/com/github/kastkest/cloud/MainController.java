@@ -6,8 +6,10 @@ import com.github.kastkest.cloud.network.Net;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 
 
@@ -145,6 +147,25 @@ public class MainController implements Initializable {
         }
         disksBox.getSelectionModel().select(0);
 
+        clientView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                if (mouseEvent.getClickCount() == 2) {
+                    Path path = Paths.get(pathField.getText()).resolve(clientView.getSelectionModel().getSelectedItem().getFilename());
+                    if (Files.isDirectory(path)) {
+                        try {
+                            pathField.setText(path.normalize().toAbsolutePath().toString());
+                            clientView.getItems().clear();
+                            clientView.getItems().addAll(getClientFiles(path));
+                            clientView.sort();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        });
+
         try {
             pathField.setText(clientDir.normalize().toAbsolutePath().toString());
 
@@ -165,8 +186,9 @@ public class MainController implements Initializable {
 
 
     public void upload(ActionEvent actionEvent) throws IOException {
+        Path path = Paths.get(pathField.getText());
         String fileName = clientView.getSelectionModel().getSelectedItem().getFilename();
-        net.write(new FileMessage(clientDir.resolve(fileName)));
+        net.write(new FileMessage(path.resolve(fileName)));
     }
 
     public void download(ActionEvent actionEvent) throws Exception {
