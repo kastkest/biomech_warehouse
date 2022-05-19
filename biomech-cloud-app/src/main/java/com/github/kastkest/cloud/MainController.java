@@ -3,6 +3,7 @@ package com.github.kastkest.cloud;
 
 import com.github.kastkest.cloud.model.*;
 import com.github.kastkest.cloud.network.Net;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
@@ -38,11 +39,11 @@ public class MainController implements Initializable {
             while (true) {
                 TableColumn<FileInfo, String> fileTypeServerColumn = new TableColumn<>("Type");
                 fileTypeServerColumn.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getType().getName()));
-                fileTypeServerColumn.setPrefWidth(40);
+                fileTypeServerColumn.setPrefWidth(50);
 
                 TableColumn<FileInfo, String> fileNameServerColumn = new TableColumn<>("Name");
                 fileNameServerColumn.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getFilename()));
-                fileNameServerColumn.setPrefWidth(120);
+                fileNameServerColumn.setPrefWidth(145);
 
                 TableColumn<FileInfo, Long> fileSizeServerColumn = new TableColumn<>("Size");
                 fileSizeServerColumn.setCellValueFactory(param -> new SimpleObjectProperty<>(param.getValue().getSize()));
@@ -83,9 +84,6 @@ public class MainController implements Initializable {
                     clientView.getItems().clear();
                     clientView.getItems().addAll(getClientFiles(Paths.get(pathField.getText())));
                 }
-
-
-
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -109,7 +107,7 @@ public class MainController implements Initializable {
 
         TableColumn<FileInfo, String> fileNameClientColumn = new TableColumn<>("Name");
         fileNameClientColumn.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getFilename()));
-        fileNameClientColumn.setPrefWidth(120);
+        fileNameClientColumn.setPrefWidth(148);
 
         TableColumn<FileInfo, Long> fileSizeClientColumn = new TableColumn<>("Size");
         fileSizeClientColumn.setCellValueFactory(param -> new SimpleObjectProperty<>(param.getValue().getSize()));
@@ -220,5 +218,9 @@ public class MainController implements Initializable {
     public void selectDisk(ActionEvent actionEvent) throws IOException {
         ComboBox<String> element = (ComboBox<String>) actionEvent.getSource();
         updateList(Paths.get(element.getSelectionModel().getSelectedItem()));
+    }
+
+    public void exit(ActionEvent actionEvent) {
+        Platform.exit();
     }
 }
