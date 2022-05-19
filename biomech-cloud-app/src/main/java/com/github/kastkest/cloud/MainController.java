@@ -10,7 +10,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
-import javafx.util.Callback;
 
 
 import java.io.IOException;
@@ -31,8 +30,7 @@ public class MainController implements Initializable {
     public TextField pathField;
 
     private Net net;
-    private Path clientDir = Paths.get(".");
-    private Path serverDir = Paths.get("server_files");
+    private Path clientDir = Paths.get("files");
 
 
     private void read() {
@@ -80,10 +78,13 @@ public class MainController implements Initializable {
                     serverView.getItems().addAll(lm.getFiles());
                     serverView.sort();
                 }
-                if (message instanceof DownloadMessage) {
+                if (message instanceof FileMessage fm) {
+                    Files.write(Paths.get(pathField.getText()).resolve(fm.getName()), fm.getBytes());
                     clientView.getItems().clear();
-                    clientView.getItems().addAll(getClientFiles(clientDir));
+                    clientView.getItems().addAll(getClientFiles(Paths.get(pathField.getText())));
                 }
+
+
 
             }
         } catch (Exception e) {
@@ -167,18 +168,24 @@ public class MainController implements Initializable {
         });
 
         try {
-            pathField.setText(clientDir.normalize().toAbsolutePath().toString());
-
-            clientView.getItems().clear();
-            clientView.getItems().addAll(getClientFiles(clientDir));
-            clientView.sort();
-
+            updateList(clientDir);
             net = new Net("localhost", 8190);
             Thread.sleep(300);
             Thread readThread = new Thread(this::read);
             readThread.setDaemon(true);
             readThread.start();
         } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateList (Path path) {
+        try {
+            pathField.setText(path.normalize().toAbsolutePath().toString());
+            clientView.getItems().clear();
+            clientView.getItems().addAll(getClientFiles(path));
+            clientView.sort();
+        } catch (IOException e) {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Cannot show files.", ButtonType.OK);
             alert.showAndWait();
         }
@@ -195,39 +202,23 @@ public class MainController implements Initializable {
         net.write(new DownloadMessage(serverView.getSelectionModel().getSelectedItem().getFilename()));
     }
 
-    public void refresh(ActionEvent actionEvent) throws IOException {
-  //      net.write(new ListMessage(clientDir));
-        serverView.getItems().clear();
-        serverView.getItems().addAll(getClientFiles(serverDir));
 
-
+    public void removeFromServer(ActionEvent actionEvent) throws IOException {
+        String filename = serverView.getSelectionModel().getSelectedItem().getFilename();
+        net.write(new DeleteMessage(filename));
     }
 
-    public void removeFromServer(ActionEvent actionEvent) {
 
-    }
-
-    public void createFolder(ActionEvent actionEvent) {
-
-    }
 
     public void passUp(ActionEvent actionEvent) throws IOException {
-
         Path upperPath = Paths.get(pathField.getText()).getParent();
         if (upperPath != null) {
-            pathField.setText(upperPath.normalize().toAbsolutePath().toString());
-            clientView.getItems().clear();
-            clientView.getItems().addAll(getClientFiles(upperPath));
-            clientView.sort();
+            updateList(upperPath);
         }
     }
 
     public void selectDisk(ActionEvent actionEvent) throws IOException {
         ComboBox<String> element = (ComboBox<String>) actionEvent.getSource();
-        Path path = Paths.get(element.getSelectionModel().getSelectedItem());
-        pathField.setText(path.normalize().toAbsolutePath().toString());
-        clientView.getItems().clear();
-        clientView.getItems().addAll(getClientFiles(path));
-        clientView.sort();
+        updateList(Paths.get(element.getSelectionModel().getSelectedItem()));
     }
 }

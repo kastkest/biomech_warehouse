@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
@@ -11,7 +12,7 @@ import java.time.ZoneOffset;
 
 @Getter
 @Setter
-public class FileInfo {
+public class FileInfo implements Serializable {
 
     private String filename;
     private FileType type;
