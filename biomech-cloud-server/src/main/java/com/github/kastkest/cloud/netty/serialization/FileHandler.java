@@ -1,9 +1,6 @@
 package com.github.kastkest.cloud.netty.serialization;
 
-import com.github.kastkest.cloud.model.AbstractMassage;
-import com.github.kastkest.cloud.model.DownloadMessage;
-import com.github.kastkest.cloud.model.FileMessage;
-import com.github.kastkest.cloud.model.ListMessage;
+import com.github.kastkest.cloud.model.*;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +13,6 @@ import java.nio.file.Paths;
 public class FileHandler extends SimpleChannelInboundHandler<AbstractMassage> {
 
     private final Path serverDir = Paths.get(".", "server_files");
-    private final Path clientDir = Paths.get(".", "files");
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
@@ -32,9 +28,11 @@ public class FileHandler extends SimpleChannelInboundHandler<AbstractMassage> {
             ctx.writeAndFlush(new ListMessage(serverDir));
         }
         if (msg instanceof DownloadMessage dm) {
-            Files.copy(serverDir.resolve(dm.getName()),
-                    clientDir.resolve(dm.getName()));
-            ctx.writeAndFlush(new DownloadMessage(dm.getName()));
+            ctx.writeAndFlush(new FileMessage(serverDir.resolve(dm.getName())));
+        }
+        if (msg instanceof DeleteMessage dm) {
+            Files.delete(serverDir.resolve(dm.getName()));
+            ctx.writeAndFlush(new ListMessage(serverDir));
         }
     }
 }

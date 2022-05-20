@@ -3,7 +3,8 @@ package com.github.kastkest.cloud.model;
 public enum MessageType {
     FILE("file"),
     LIST("list"),
-    DOWNLOAD("download");
+    DOWNLOAD("download"),
+    DELETE("delete");
 
     private final String name;
 
