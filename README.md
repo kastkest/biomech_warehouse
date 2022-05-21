@@ -1,20 +1,20 @@
-## Overview
-Project for saving file on the server. These files should have access by a link also.
+# BioMech Warehouse
+![Cloud](https://user-images.githubusercontent.com/96120687/169664438-46bdf213-0f3b-4421-9d6f-cd7cf45dfaba.jpg)
 
-## Building
-...
+Cloud storage which allow user saving files remotely and take it from server.
 
-## Troubleshooting
-...
+## Technological stack
+
+- JavaFX
+- Netty API
+
+![Cloud UI](https://user-images.githubusercontent.com/96120687/169664903-5ddd49f2-31dc-4b09-bd0c-d5fa0dedab83.jpg)
 
 ## Release Notes
 Can be found in [RELEASE_NOTES](RELEASE_NOTES.md).
 
 ## Authors
 * Konstantin Kasterov - [kastkest](https://github.com/kastkest)
-
-## Acknowledgments
-...
 
 ## Contributing
 Please, follow [Contributing](CONTRIBUTING.md) page.
