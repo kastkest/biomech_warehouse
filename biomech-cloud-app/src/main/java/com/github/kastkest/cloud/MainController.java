@@ -37,42 +37,7 @@ public class MainController implements Initializable {
     private void read() {
         try {
             while (true) {
-                TableColumn<FileInfo, String> fileTypeServerColumn = new TableColumn<>("Type");
-                fileTypeServerColumn.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getType().getName()));
-                fileTypeServerColumn.setPrefWidth(50);
 
-                TableColumn<FileInfo, String> fileNameServerColumn = new TableColumn<>("Name");
-                fileNameServerColumn.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getFilename()));
-                fileNameServerColumn.setPrefWidth(145);
-
-                TableColumn<FileInfo, Long> fileSizeServerColumn = new TableColumn<>("Size");
-                fileSizeServerColumn.setCellValueFactory(param -> new SimpleObjectProperty<>(param.getValue().getSize()));
-                fileSizeServerColumn.setPrefWidth(120);
-                fileSizeServerColumn.setCellFactory(column -> {
-                    return new TableCell<FileInfo, Long>() {
-                        @Override
-                        protected void updateItem(Long item, boolean empty) {
-                            super.updateItem(item, empty);
-                            if (item == null || empty) {
-                                setText(null);
-                                setStyle("");
-                            } else {
-                                String text = String.format("%,d bytes", item);
-                                if (item == -1) {
-                                    text = "";
-                                }
-                                setText(text);
-                            }
-                        }
-                    };
-                });
-
-                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("YYYY-MM-dd HH:mm:ss");
-                TableColumn<FileInfo, String> fileDateServerColumn = new TableColumn<>("Date Modified");
-                fileDateServerColumn.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getLastModified().format(dtf)));
-                fileDateServerColumn.setPrefWidth(120);
-
-                serverView.getColumns().addAll(fileNameServerColumn, fileTypeServerColumn, fileSizeServerColumn, fileDateServerColumn);
                 AbstractMassage message = net.read();
                 if (message instanceof ListMessage lm) {
                     serverView.getItems().clear();
@@ -100,6 +65,43 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        TableColumn<FileInfo, String> fileTypeServerColumn = new TableColumn<>("Type");
+        fileTypeServerColumn.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getType().getName()));
+        fileTypeServerColumn.setPrefWidth(50);
+
+        TableColumn<FileInfo, String> fileNameServerColumn = new TableColumn<>("Name");
+        fileNameServerColumn.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getFilename()));
+        fileNameServerColumn.setPrefWidth(145);
+
+        TableColumn<FileInfo, Long> fileSizeServerColumn = new TableColumn<>("Size");
+        fileSizeServerColumn.setCellValueFactory(param -> new SimpleObjectProperty<>(param.getValue().getSize()));
+        fileSizeServerColumn.setPrefWidth(120);
+        fileSizeServerColumn.setCellFactory(column -> {
+            return new TableCell<FileInfo, Long>() {
+                @Override
+                protected void updateItem(Long item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (item == null || empty) {
+                        setText(null);
+                        setStyle("");
+                    } else {
+                        String text = String.format("%,d bytes", item);
+                        if (item == -1) {
+                            text = "";
+                        }
+                        setText(text);
+                    }
+                }
+            };
+        });
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("YYYY-MM-dd HH:mm:ss");
+        TableColumn<FileInfo, String> fileDateServerColumn = new TableColumn<>("Date Modified");
+        fileDateServerColumn.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getLastModified().format(dtf)));
+        fileDateServerColumn.setPrefWidth(120);
+
+        serverView.getColumns().addAll(fileNameServerColumn, fileTypeServerColumn, fileSizeServerColumn, fileDateServerColumn);
 
         TableColumn<FileInfo, String> fileTypeClientColumn = new TableColumn<>("Type");
         fileTypeClientColumn.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getType().getName()));
@@ -131,9 +133,9 @@ public class MainController implements Initializable {
             };
         });
 
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("YYYY-MM-dd HH:mm:ss");
+        DateTimeFormatter dtf1 = DateTimeFormatter.ofPattern("YYYY-MM-dd HH:mm:ss");
         TableColumn<FileInfo, String> fileDateClientColumn = new TableColumn<>("Date Modified");
-        fileDateClientColumn.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getLastModified().format(dtf)));
+        fileDateClientColumn.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getLastModified().format(dtf1)));
 
         fileDateClientColumn.setPrefWidth(120);
 
